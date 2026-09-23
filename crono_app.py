@@ -100,7 +100,10 @@ def load_image_to_text():
 def load_nlp_explainer():
     from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
-    tokenizer = AutoTokenizer.from_pretrained(NLP_MODEL)
+    tokenizer = AutoTokenizer.from_pretrained(
+        NLP_MODEL,
+        clean_up_tokenization_spaces=False,
+    )
     model = AutoModelForSeq2SeqLM.from_pretrained(NLP_MODEL).to(device)
     model.eval()
 
@@ -113,7 +116,13 @@ def load_nlp_explainer():
                 max_new_tokens=max_length,
                 do_sample=False,
             )
-        return [{"generated_text": tokenizer.decode(output_tokens[0], skip_special_tokens=True)}]
+        return [{
+            "generated_text": tokenizer.decode(
+                output_tokens[0],
+                skip_special_tokens=True,
+                clean_up_tokenization_spaces=False,
+            )
+        }]
 
     return explain
 
@@ -142,7 +151,10 @@ def load_translation():
     from transformers import AutoModelForSeq2SeqLM, MarianTokenizer
 
     model_name = "Helsinki-NLP/opus-mt-en-hi"
-    tokenizer = MarianTokenizer.from_pretrained(model_name)
+    tokenizer = MarianTokenizer.from_pretrained(
+        model_name,
+        clean_up_tokenization_spaces=False,
+    )
     model = AutoModelForSeq2SeqLM.from_pretrained(model_name).to(device)
     model.eval()
 
@@ -151,7 +163,11 @@ def load_translation():
         inputs = {key: value.to(device) for key, value in inputs.items()}
         with torch.inference_mode():
             output_tokens = model.generate(**inputs, max_new_tokens=128)
-        translated_text = tokenizer.decode(output_tokens[0], skip_special_tokens=True)
+        translated_text = tokenizer.decode(
+            output_tokens[0],
+            skip_special_tokens=True,
+            clean_up_tokenization_spaces=False,
+        )
         return [{"translation_text": translated_text}]
 
     return translate
@@ -343,11 +359,11 @@ if run_hindi:
 
 if run_reconstruction:
     detected_visuals = st.session_state.detected_visuals or sample["vision_caption"]
+    compact_visuals = " ".join(str(detected_visuals).split()[:20])
     render_prompt = (
-        f"A highly detailed museum-quality reconstruction of {sample['artifact_title']}, "
-        f"{sample['historic_era']}, {detected_visuals}. "
-        "Accurate historical materials, realistic proportions, natural museum lighting, "
-        "sharp focus, fine surface details, centered composition."
+        f"Museum reconstruction of {sample['artifact_title']}. "
+        f"Era: {sample['historic_era']}. Visuals: {compact_visuals}. "
+        "Realistic materials, centered composition, natural lighting."
     )
     negative_prompt = (
         "blurry, low resolution, distorted, deformed, extra limbs, duplicate objects, "
