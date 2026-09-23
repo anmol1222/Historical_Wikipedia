@@ -1,0 +1,20 @@
+# ChronoDoc Multimodal Historical Archivist
+streamlit
+
+# Model runtimes
+torch
+torchvision
+transformers
+diffusers
+accelerate
+safetensors
+datasets
+
+# Audio, image, and data utilities
+soundfile
+Pillow
+pandas
+
+# MarianMT tokenizer support
+sentencepiece
+sacremoses

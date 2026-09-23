@@ -1,0 +1,56 @@
+{
+  "citation": "",
+  "description": "",
+  "features": {
+    "id": {
+      "dtype": "large_string",
+      "_type": "Value"
+    },
+    "audio_filename": {
+      "dtype": "large_string",
+      "_type": "Value"
+    },
+    "speaker_dialect": {
+      "dtype": "large_string",
+      "_type": "Value"
+    },
+    "ground_transcript": {
+      "dtype": "large_string",
+      "_type": "Value"
+    },
+    "image_id": {
+      "dtype": "large_string",
+      "_type": "Value"
+    },
+    "artifact_title": {
+      "dtype": "large_string",
+      "_type": "Value"
+    },
+    "historic_era": {
+      "dtype": "large_string",
+      "_type": "Value"
+    },
+    "vision_caption": {
+      "dtype": "large_string",
+      "_type": "Value"
+    },
+    "user_instruction": {
+      "dtype": "large_string",
+      "_type": "Value"
+    },
+    "historic_question": {
+      "dtype": "large_string",
+      "_type": "Value"
+    },
+    "archival_context": {
+      "dtype": "large_string",
+      "_type": "Value"
+    },
+    "expected_answer": {
+      "dtype": "large_string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": ""
+}
